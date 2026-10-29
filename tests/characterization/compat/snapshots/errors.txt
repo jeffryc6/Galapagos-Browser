@@ -1,0 +1,54 @@
+﻿probe=errors
+title=Sonda errors — Galapagos Browser
+worker_faults=0
+lines=50
+[console:error] localhost 
+[console:error] localhost Error at http://localhost:PORT/errors.html:20:30 undefinedFunctionHarness is not defined
+[console:error] localhost Unhandled promise rejection: (new Error("[inj] rejected", "http://localhost:PORT/errors.html", 21))
+[console:error] localhost [inj] ctl   tab nl
+[console:error] localhost [inj] flood 0
+[console:error] localhost [inj] flood 1
+[console:error] localhost [inj] flood 10
+[console:error] localhost [inj] flood 11
+[console:error] localhost [inj] flood 12
+[console:error] localhost [inj] flood 13
+[console:error] localhost [inj] flood 14
+[console:error] localhost [inj] flood 15
+[console:error] localhost [inj] flood 16
+[console:error] localhost [inj] flood 17
+[console:error] localhost [inj] flood 18
+[console:error] localhost [inj] flood 19
+[console:error] localhost [inj] flood 2
+[console:error] localhost [inj] flood 20
+[console:error] localhost [inj] flood 21
+[console:error] localhost [inj] flood 22
+[console:error] localhost [inj] flood 23
+[console:error] localhost [inj] flood 24
+[console:error] localhost [inj] flood 25
+[console:error] localhost [inj] flood 26
+[console:error] localhost [inj] flood 27
+[console:error] localhost [inj] flood 28
+[console:error] localhost [inj] flood 29
+[console:error] localhost [inj] flood 3
+[console:error] localhost [inj] flood 30
+[console:error] localhost [inj] flood 31
+[console:error] localhost [inj] flood 32
+[console:error] localhost [inj] flood 33
+[console:error] localhost [inj] flood 34
+[console:error] localhost [inj] flood 35
+[console:error] localhost [inj] flood 36
+[console:error] localhost [inj] flood 37
+[console:error] localhost [inj] flood 38
+[console:error] localhost [inj] flood 39
+[console:error] localhost [inj] flood 4
+[console:error] localhost [inj] flood 40
+[console:error] localhost [inj] flood 41
+[console:error] localhost [inj] flood 5
+[console:error] localhost [inj] flood 6
+[console:error] localhost [inj] flood 7
+[console:error] localhost [inj] flood 8
+[console:error] localhost [inj] flood 9
+[console:error] localhost [inj] long xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+[console:error] localhost [inj] obj {"a": 1}
+[console:error] localhost [inj] unicode ñ 😀 中文
+[console:error] localhost [probe:done] errors-pre-flood

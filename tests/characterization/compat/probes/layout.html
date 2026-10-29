@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sonda layout</title>
+<style>
+  /* Cajas de tamano fijo en px CSS: el resultado no depende del tamano de la ventana ni del DPI */
+  body { margin: 0; font: 12px sans-serif; }
+  .c { width: 300px; height: 20px; }
+  #flex { display: flex; } #flex > div { flex: 1; }
+  #grid { display: grid; grid-template-columns: 1fr 2fr; }
+  #gap { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 15px; }
+  #ar { width: 120px; aspect-ratio: 2 / 1; }
+  .hasbox { width: 10px; height: 5px; } .hasbox:has(.mark) { width: 50px; }
+  #cqwrap { container-type: inline-size; width: 400px; } .cq { width: 10px; height: 5px; }
+  @container (min-width: 300px) { .cq { width: 77px; } }
+  #clamp { width: clamp(10px, 50%, 80px); height: 5px; }
+  #vars { --w: 33px; width: var(--w); height: 5px; }
+  #logical { margin-inline-start: 20px; width: 10px; height: 5px; }
+  #tf { width: 50px; height: 10px; transform: scale(2); transform-origin: 0 0; }
+  #tbl { table-layout: fixed; width: 300px; border-collapse: collapse; border-spacing: 0; }
+  #tbl td { padding: 0; border: 0; }
+  #minmax { display: grid; grid-template-columns: minmax(50px, 1fr) 200px; }
+  #abs { position: relative; width: 300px; height: 40px; } #abs > div { position: absolute; inset: 5px 10px; }
+  /* DELTA_11: multicolumna; cada columna de 300 px con 20 px de separacion mide 140 */
+  #cols { width: 300px; column-count: 2; column-gap: 20px; } #cols > div { height: 5px; }
+</style>
+<div class="c" id="flex"><div></div><div></div><div></div></div>
+<div class="c" id="grid"><div></div><div></div></div>
+<div class="c" id="gap"><div></div><div></div><div></div></div>
+<div id="ar"></div>
+<div class="hasbox" id="has"><span class="mark"></span></div>
+<div id="cqwrap"><div class="cq" id="cq"></div></div>
+<div class="c"><div id="clamp"></div></div>
+<div id="vars"></div>
+<div class="c" id="logwrap"><div id="logical"></div></div>
+<div id="tf"></div>
+<table id="tbl"><colgroup><col style="width:100px"><col style="width:200px"></colgroup><tr><td id="td1">a</td><td id="td2">b</td></tr></table>
+<div class="c" id="minmax"><div></div><div></div></div>
+<div id="abs"><div id="absin"></div></div>
+<div id="cols"><div id="colin"></div></div>
+<script src="probe.js"></script>
+<script>
+  var P = PROBE;
+  function w(el) { return Math.round(el.getBoundingClientRect().width); }
+  function h(el) { return Math.round(el.getBoundingClientRect().height); }
+  function kids(id) { var out = [], k = document.getElementById(id).children; for (var i = 0; i < k.length; i++) out.push(w(k[i])); return out.join("/"); }
+  function $(id) { return document.getElementById(id); }
+  P.check("flex", function () { return kids("flex"); });            // esperado por la norma: 100/100/100
+  P.check("grid.fr", function () { return kids("grid"); });         // 100/200
+  P.check("grid.gap", function () { return kids("gap"); });         // 90/90/90
+  P.check("grid.minmax", function () { return kids("minmax"); });   // 100/200
+  P.check("aspect-ratio.h", function () { return h($("ar")); });    // 60
+  P.check("has.w", function () { return w($("has")); });            // 50
+  P.check("container.w", function () { return w($("cq")); });      // 77
+  P.check("clamp.w", function () { return w($("clamp")); });        // 80
+  P.check("var.w", function () { return w($("vars")); });           // 33
+  P.check("logical.x", function () { return Math.round($("logical").getBoundingClientRect().left - $("logwrap").getBoundingClientRect().left); }); // 20
+  P.check("transform.w", function () { return w($("tf")); });       // 100
+  P.check("table.fixed", function () { return w($("td1")) + "/" + w($("td2")); }); // 100/200
+  P.check("inset", function () { return w($("absin")) + "x" + h($("absin")); });   // 280x30
+  P.check("columns.w", function () { return w($("colin")); });      // 140 (300 sin multicolumna)
+  P.emit("layout");
+  P.done("layout");
+</script>

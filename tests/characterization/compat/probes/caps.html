@@ -1,0 +1,88 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sonda caps</title>
+<p>Capacidades de la plataforma web</p>
+<script src="probe.js"></script>
+<script>
+  var P = PROBE;
+  // Observadores y DOM moderno
+  P.check("IntersectionObserver", function () { return typeof IntersectionObserver === "function"; });
+  P.check("ResizeObserver", function () { return typeof ResizeObserver === "function"; });
+  P.check("MutationObserver", function () { return typeof MutationObserver === "function"; });
+  P.check("PerformanceObserver", function () { return typeof PerformanceObserver === "function"; });
+  P.check("attachShadow", function () { return typeof Element.prototype.attachShadow === "function"; });
+  P.check("customElements", function () { return typeof customElements === "object" && customElements !== null; });
+  P.check("requestIdleCallback", function () { return typeof requestIdleCallback === "function"; });
+  P.check("matchMedia", function () { return typeof matchMedia === "function"; });
+  P.emit("caps-dom");
+
+  // Multimedia (YouTube depende de MediaSource)
+  P.check("MediaSource", function () { return typeof MediaSource === "function"; });
+  P.check("ManagedMediaSource", function () { return typeof ManagedMediaSource === "function"; });
+  P.check("VideoDecoder", function () { return typeof VideoDecoder === "function"; });
+  P.check("EME", function () { return typeof navigator.requestMediaKeySystemAccess === "function"; });
+  var v = document.createElement("video");
+  P.check("video.mp4.h264", function () { return v.canPlayType('video/mp4; codecs="avc1.42E01E"'); });
+  P.check("video.webm.vp9", function () { return v.canPlayType('video/webm; codecs="vp9"'); });
+  P.check("audio.mp3", function () { return document.createElement("audio").canPlayType("audio/mpeg"); });
+  P.check("AudioContext", function () { return typeof AudioContext === "function"; });
+  P.emit("caps-media");
+
+  // Graficos
+  P.check("webgl", function () { return document.createElement("canvas").getContext("webgl") !== null; });
+  P.check("webgl2", function () { return document.createElement("canvas").getContext("webgl2") !== null; });
+  P.check("webgpu", function () { return typeof navigator.gpu === "object" && navigator.gpu !== null; });
+  P.check("canvas2d", function () { return document.createElement("canvas").getContext("2d") !== null; });
+  P.check("OffscreenCanvas", function () { return typeof OffscreenCanvas === "function"; });
+  P.emit("caps-gfx");
+
+  // Seguridad, almacenamiento y red
+  P.check("isSecureContext", function () { return window.isSecureContext; });
+  P.check("crypto.getRandomValues", function () { return crypto.getRandomValues(new Uint8Array(4)).length === 4; });
+  P.check("crypto.subtle", function () { return typeof crypto.subtle === "object" && crypto.subtle !== null; });
+  P.check("crypto.randomUUID", function () { return typeof crypto.randomUUID === "function"; });
+  P.check("localStorage", function () { localStorage.setItem("h", "1"); return localStorage.getItem("h") === "1"; });
+  P.check("sessionStorage", function () { sessionStorage.setItem("h", "1"); return sessionStorage.getItem("h") === "1"; });
+  P.check("cookie", function () { document.cookie = "h=1"; return document.cookie.indexOf("h=1") >= 0; });
+  P.check("indexedDB", function () { return typeof indexedDB === "object" && indexedDB !== null; });
+  P.check("serviceWorker", function () { return "serviceWorker" in navigator; });
+  P.check("fetch", function () { return typeof fetch === "function"; });
+  P.check("WebSocket", function () { return typeof WebSocket === "function"; });
+  P.check("BroadcastChannel", function () { return typeof BroadcastChannel === "function"; });
+  P.check("Worker", function () { return typeof Worker === "function"; });
+  P.check("SharedWorker", function () { return typeof SharedWorker === "function"; });
+  P.check("Notification", function () { return typeof Notification === "function"; });
+  P.check("clipboard", function () { return typeof navigator.clipboard === "object" && navigator.clipboard !== null; });
+  P.emit("caps-sec");
+
+  // JavaScript y streams
+  P.check("WebAssembly", function () { return WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0])); });
+  P.check("BigInt", function () { return typeof BigInt === "function"; });
+  P.check("WeakRef", function () { return typeof WeakRef === "function"; });
+  P.check("structuredClone", function () { return typeof structuredClone === "function"; });
+  P.check("AbortController", function () { return typeof AbortController === "function"; });
+  P.check("Array.at", function () { return typeof Array.prototype.at === "function"; });
+  P.check("Object.hasOwn", function () { return typeof Object.hasOwn === "function"; });
+  P.check("Promise.any", function () { return typeof Promise.any === "function"; });
+  P.check("Intl.Segmenter", function () { return typeof Intl.Segmenter === "function"; });
+  P.check("TextEncoder", function () { return typeof TextEncoder === "function"; });
+  P.check("ReadableStream", function () { return typeof ReadableStream === "function"; });
+  P.check("CompressionStream", function () { return typeof CompressionStream === "function"; });
+  P.emit("caps-js");
+
+  // CSS por CSS.supports (el render real se mide en layout.html)
+  P.check("css.has", function () { return CSS.supports("selector(:has(a))"); });
+  P.check("css.container", function () { return CSS.supports("container-type", "inline-size"); });
+  P.check("css.grid", function () { return CSS.supports("display", "grid"); });
+  P.check("css.subgrid", function () { return CSS.supports("grid-template-columns", "subgrid"); });
+  P.check("css.aspect-ratio", function () { return CSS.supports("aspect-ratio", "1 / 1"); });
+  P.check("css.sticky", function () { return CSS.supports("position", "sticky"); });
+  P.check("css.backdrop-filter", function () { return CSS.supports("backdrop-filter", "blur(1px)"); });
+  P.check("css.nesting", function () { return CSS.supports("selector(&)"); });
+  P.emit("caps-css");
+
+  // Identidad: el User-Agent es estable por binario; el idioma y la escala dependen del equipo
+  P.check("ua", function () { return navigator.userAgent; });
+  P.emit("caps-ua");
+  P.done("caps");
+</script>

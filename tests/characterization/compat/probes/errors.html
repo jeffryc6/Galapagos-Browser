@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sonda errors</title>
+<p>Inyeccion de errores de consola</p>
+<script src="probe.js"></script>
+<script>
+  // Niveles que el worker debe descartar
+  console.log("[inj] log");
+  console.info("[inj] info");
+  console.warn("[inj] warn");
+  console.debug("[inj] debug");
+  // Limites: vacio, caracteres de control, Unicode, muy largo (> 512 B), objeto
+  console.error("");
+  console.error("[inj] ctl\u0001\u0007\ttab\nnl");
+  console.error("[inj] unicode ñ 😀 中文");
+  console.error("[inj] long " + new Array(2001).join("x"));
+  console.error("[inj] obj", { a: 1 });
+  setTimeout(function () {
+    // Error no capturado y promesa rechazada sin manejar
+    setTimeout(function () { undefinedFunctionHarness(); }, 0);
+    Promise.reject(new Error("[inj] rejected"));
+    setTimeout(function () {
+      PROBE.done("errors-pre-flood");
+      // Inundacion: 60 errores; el worker guarda como mucho 50 por documento (D42). Las lineas
+      // anteriores ya cuentan para ese tope.
+      for (var i = 0; i < 60; i++) console.error("[inj] flood " + i);
+    }, 200);
+  }, 100);
+</script>

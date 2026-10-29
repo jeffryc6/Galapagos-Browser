@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sonda crash</title>
+<p>Panico real de pagina (DELTA_11 D53)</p>
+<script src="probe.js"></script>
+<script>
+  // Solo existe si el worker es debug y recibio GALAPAGOS_TEST_SERVO_HELPERS=1
+  PROBE.check("ServoTestUtils.panic", function () {
+    return typeof ServoTestUtils === "object" && typeof ServoTestUtils.panic === "function";
+  });
+  PROBE.emit("crash");
+  // El marcador va antes del panico: despues la pagina la sustituye la de fallo de Servo
+  PROBE.done("crash-pre");
+  setTimeout(function () { ServoTestUtils.panic(); }, 100);
+</script>

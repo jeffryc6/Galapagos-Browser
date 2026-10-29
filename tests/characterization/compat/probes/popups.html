@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sonda popups</title>
+<p>Ventanas auxiliares y dialogos</p>
+<script src="probe.js"></script>
+<script>
+  var P = PROBE;
+  // Dialogos simples: el worker no los presenta (D44); se registra lo que devuelve Servo
+  P.check("alert", function () { return alert("[inj] alert"); });
+  P.check("confirm", function () { return confirm("[inj] confirm"); });
+  P.check("prompt", function () { return prompt("[inj] prompt", "def"); });
+  P.emit("dialogs");
+  // Pila de WebView (D41): raiz + 3 auxiliares como maximo. Se piden 5 en el mismo turno de
+  // script (sin temporizadores: el opener queda oculto al abrirse el primero), una a data:,
+  // que la politica de navegacion del worker deniega despues de crear el contexto.
+  var targets = ["aux.html", "aux.html", "data:text/html,x", "aux.html", "aux.html"];
+  for (var i = 0; i < targets.length; i++) {
+    var w = null;
+    try { w = window.open(targets[i]); } catch (e) { P.results.push("open" + i + "=E:" + e.name); continue; }
+    P.results.push("open" + i + "=" + (w ? "obj" : "null"));
+  }
+  P.emit("open");
+  P.done("popups");
+</script>

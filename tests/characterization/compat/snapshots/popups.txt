@@ -1,0 +1,12 @@
+﻿probe=popups
+title=Sonda popups — Galapagos Browser
+worker_faults=0
+lines=8
+[aux:rechazado] pila llena (4)
+[aux:rechazado] pila llena (4)
+[console:error] localhost [probe:dialogs] alert=-;confirm=0;prompt=-
+[console:error] localhost [probe:done] popups
+[console:error] localhost [probe:open] open0=obj;open1=obj;open2=obj;open3=null;open4=null
+[control:sin-soporte] localhost SimpleDialog(Alert)
+[control:sin-soporte] localhost SimpleDialog(Confirm)
+[control:sin-soporte] localhost SimpleDialog(Prompt)

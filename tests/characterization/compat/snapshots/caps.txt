@@ -1,0 +1,12 @@
+﻿probe=caps
+title=Sonda caps — Galapagos Browser
+worker_faults=0
+lines=8
+[console:error] localhost [probe:caps-css] css.has=0;css.container=0;css.grid=1;css.subgrid=0;css.aspect-ratio=1;css.sticky=1;css.backdrop-filter=0;css.nesting=1
+[console:error] localhost [probe:caps-dom] IntersectionObserver=0;ResizeObserver=1;MutationObserver=1;PerformanceObserver=1;attachShadow=1;customElements=1;requestIdleCallback=0;matchMedia=1
+[console:error] localhost [probe:caps-gfx] webgl=0;webgl2=0;webgpu=0;canvas2d=1;OffscreenCanvas=0
+[console:error] localhost [probe:caps-js] WebAssembly=1;BigInt=1;WeakRef=1;structuredClone=1;AbortController=1;Array.at=1;Object.hasOwn=1;Promise.any=1;Intl.Segmenter=1;TextEncoder=1;ReadableStream=1;CompressionStream=1
+[console:error] localhost [probe:caps-media] MediaSource=0;ManagedMediaSource=0;VideoDecoder=0;EME=0;video.mp4.h264=-;video.webm.vp9=-;audio.mp3=-;AudioContext=1
+[console:error] localhost [probe:caps-sec] isSecureContext=1;crypto.getRandomValues=E:ReferenceError;crypto.subtle=E:ReferenceError;crypto.randomUUID=E:ReferenceError;localStorage=1;sessionStorage=1;cookie=1;indexedDB=0;serviceWorker=0;fetch=1;WebSocket=1;BroadcastChannel=1;Worker=1;SharedWorker=1;Notification=0;clipboard=0
+[console:error] localhost [probe:caps-ua] ua=Mozilla/5.0 (Windows NT 10.0; Win64; x86_64; rv:153.0) Servo/0.7.0 Firefox/153.0
+[console:error] localhost [probe:done] caps
