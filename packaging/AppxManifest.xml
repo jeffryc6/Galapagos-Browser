@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- packaging/AppxManifest.xml -->
+<!-- Manifiesto de Aplicacion MSIX para Galapagos Browser v0.1 -->
+<!-- Conforme a estandar ZNVE v2.4.2 (Axiomas 1 y 2, ARC-01, SEC-01, SEC-02) -->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap rescap desktop">
+
+  <Identity
+    Name="GalapagosTechnologies.GalapagosBrowser"
+    Publisher="CN=GalapagosTechnologies, O=Galapagos Technologies Inc., C=US"
+    Version="0.1.0.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Galapagos Browser</DisplayName>
+    <PublisherDisplayName>Galapagos Technologies Inc.</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Navegador web de alta seguridad bajo estandar ZNVE v2.4.2, aislamiento AppContainer y motor Ocean Defense.</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22621.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="es-ES" />
+    <Resource Language="en-US" />
+  </Resources>
+
+  <Applications>
+    <!-- Trusted Coordinator: Proceso anfitrion principal (FullTrust para control de Job Objects y UI Win32) -->
+    <Application
+      Id="GalapagosBrowserCoordinator"
+      Executable="galapagos-browser.exe"
+      EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Galapagos Browser"
+        Description="Galapagos Browser v0.1 - Trusted Coordinator"
+        BackgroundColor="#0f172a"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile ShortName="Galapagos" Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0f172a" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <!-- Capacidades declaradas conforme a privilegios minimos -->
+  <Capabilities>
+    <!-- Privilegio FullTrust restringido exclusivamente al Trusted Coordinator (ARC-01) -->
+    <rescap:Capability Name="runFullTrust" />
+    <!-- Conectividad cliente saliente para navegacion web -->
+    <Capability Name="internetClient" />
+    <!-- Conectividad privada local estricta para canal Named Pipes IPC -->
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+
+</Package>
